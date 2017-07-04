@@ -16,9 +16,9 @@ pip3 install -r requirements.txt
 
 ### Training
 
-Training takes less than 20 minutes on a single `NVIDIA Tesla K80` GPU (AWS `p2.xlarge` instance).
+Training takes less than 20 minutes on a single [`NVIDIA Tesla K80`](http://www.nvidia.com/object/tesla-k80.html) GPU (AWS [`p2.xlarge`](https://aws.amazon.com/ec2/instance-types/p2/) instance).
 
-Or roughly 2-3 hours on an Intel i7-7567U CPU.
+Or roughly 2-3 hours on an Intel [i7-7567U](https://ark.intel.com/products/97541/Intel-Core-i7-7567U-Processor-4M-Cache-up-to-4_00-GHz) CPU.
 
 ```
 python3 train.py
