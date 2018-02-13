@@ -72,7 +72,7 @@ def main(args):
         batch_size=10,
         num_epochs=None,
         shuffle=True)
-    imagenet_classifier.train(input_fn=train_input_fn, steps=20000)
+    imagenet_classifier.train(input_fn=train_input_fn, steps=10000)
 
     # Evaluate the model and print results
     eval_input_fn = tf.estimator.inputs.numpy_input_fn(
