@@ -1,0 +1,9 @@
+all:
+	@echo "Usage: make [train|retrain]"
+
+train:
+	python3 train.py tiny-imagenet-200
+
+retrain:
+	rm -rf tiny_imagenet_model
+	python3 train.py tiny-imagenet-200
