@@ -54,7 +54,7 @@ for class_path in class_paths:
     for i in range(0, images_per_class):
         # Decode image
         img = scipy.ndimage.imread(files[i], mode='RGB')
-        img = img.reshape(1, 64, 64, 3).tolist()
+        img = img.reshape(64, 64, 3).tolist()
 
         if i < train_images_per_class:
             # Read first some files as training data
