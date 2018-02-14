@@ -78,7 +78,7 @@ eval_labels = np.asarray(eval_labels, dtype=np.float32)
 print('done', flush=True)
 
 print('train_data:', train_data.shape, 'train_labels:', train_labels.shape)
-print('eval_data:', eval_data.shape, 'eval_data:', train_labels.shape)
+print('eval_data:', eval_data.shape, 'eval_data:', eval_labels.shape)
 
 print('Saving arrays...', end='', flush=True)
 np.save(os.path.join(base_path, 'train_data.npy'), train_data)
