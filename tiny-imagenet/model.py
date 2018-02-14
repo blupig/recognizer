@@ -13,39 +13,39 @@ def cnn_model_fn(features, labels, mode):
     # Input images are 64x64 pixels, 3 channels (RGB).
     network = tf.reshape(features["x"], [-1, 64, 64, 3])
 
-    # Convolutional Layer #1
     # Input shape: [batch_size, 64, 64, 3]
-    # Output shape: [batch_size, 64, 64, 16]
-    network = tf.layers.conv2d(inputs=network, filters=16, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
+    # Output shape: [batch_size, 64, 64, 96]
+    network = tf.layers.conv2d(inputs=network, filters=96, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
 
-    # Pooling Layer #1
-    # Input shape: [batch_size, 64, 64, 16]
-    # Output shape: [batch_size, 32, 32, 16]
+    # In: [batch_size, 64, 64, 96]
+    # Out: [batch_size, 32, 32, 96]
     network = tf.layers.max_pooling2d(inputs=network, pool_size=[2, 2], strides=2)
 
-    # Input shape: [batch_size, 32, 32, 16]
-    # Output shape: [batch_size, 32, 32, 64]
-    network = tf.layers.conv2d(inputs=network, filters=64, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
+    # Input shape: [batch_size, 32, 32, 96]
+    # Output shape: [batch_size, 32, 32, 128]
+    network = tf.layers.conv2d(inputs=network, filters=128, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
 
-    # Input shape: [batch_size, 32, 32, 32]
-    # Output shape: [batch_size, 16, 16, 64]
+    # Input shape: [batch_size, 32, 32, 128]
+    # Output shape: [batch_size, 16, 16, 128]
     network = tf.layers.max_pooling2d(inputs=network, pool_size=[2, 2], strides=2)
 
-    # Input shape: [batch_size, 16, 16, 64]
-    # Output shape: [batch_size, 16, 16, 32]
-    network = tf.layers.conv2d(inputs=network, filters=32, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
+    # Input shape: [batch_size, 16, 16, 192]
+    # Output shape: [batch_size, 16, 16, 192]
+    network = tf.layers.conv2d(inputs=network, filters=192, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
+    network = tf.layers.conv2d(inputs=network, filters=192, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
 
-    # Input shape: [batch_size, 16, 16, 32]
-    # Output shape: [batch_size, 8, 8, 32]
+    # Input shape: [batch_size, 16, 16, 192]
+    # Output shape: [batch_size, 8, 8, 192]
     network = tf.layers.max_pooling2d(inputs=network, pool_size=[2, 2], strides=2)
 
     # Flatten
-    # Input Tensor Shape: [batch_size, 8, 8, 32]
-    # Output Tensor Shape: [batch_size, 8 * 8 * 32]
-    network = tf.reshape(network, [-1, 8 * 8 * 32])
+    # Input Tensor Shape: [batch_size, 8, 8, 192]
+    # Output Tensor Shape: [batch_size, 8 * 8 * 192]
+    network = tf.reshape(network, [-1, 8 * 8 * 192])
 
-    # Dense layer
-    network = tf.layers.dense(inputs=network, units=512, activation=tf.nn.relu)
+    # Dense layers
+    network = tf.layers.dense(inputs=network, units=2048, activation=tf.nn.relu)
+    network = tf.layers.dense(inputs=network, units=256, activation=tf.nn.relu)
 
     # Dropout
     network = tf.layers.dropout(inputs=network, rate=0.5, training=(mode == tf.estimator.ModeKeys.TRAIN))

@@ -35,6 +35,9 @@ class_paths.sort()
 # Read images and assign labels
 class_id = 0
 for class_path in class_paths:
+    # Print status
+    print('Reading class: ', class_path)
+
     # Images base path
     img_path_full = os.path.join(train_data_path, class_path, 'images')
 
@@ -56,6 +59,10 @@ for class_path in class_paths:
             eval_data = np.append(eval_data, img, axis=0)
             eval_labels = np.append(eval_labels, class_id)
 
+        # Print status every 100 images
+        if i % 100 == 0:
+            print('Read ', i, ' images')
+
     class_id += 1
     if class_id == 10:
         break
@@ -65,8 +72,8 @@ print('train_data: ', train_data.shape)
 print('eval_data: ', eval_data.shape)
 
 print('Saving arrays...', end='', flush=True)
-np.save(os.path.join(base_path, 'train_data'), train_data)
-np.save(os.path.join(base_path, 'train_labels'), train_labels)
-np.save(os.path.join(base_path, 'eval_data'), eval_data)
-np.save(os.path.join(base_path, 'eval_labels'), eval_labels)
+np.save(os.path.join(base_path, 'train_data.npy'), train_data)
+np.save(os.path.join(base_path, 'train_labels.npy'), train_labels)
+np.save(os.path.join(base_path, 'eval_data.npy'), eval_data)
+np.save(os.path.join(base_path, 'eval_labels.npy'), eval_labels)
 print('done', flush=True)
