@@ -8,18 +8,24 @@ import numpy as np
 import scipy.ndimage
 import sys
 
+# Configurations
+num_classes = 20
+images_per_class = 450
+train_images_per_class = 400
+
 # Load training and eval data
 if len(sys.argv) < 2:
     print('ERROR: No data path provided')
     sys.exit(1)
 
-print('Reading data...', end='', flush=True)
-
-# Init data arrays
-train_data = np.empty((0, 64, 64, 3), dtype=np.float32)
-train_labels = np.empty((0), dtype=np.int32)
-eval_data = np.empty((0, 64, 64, 3), dtype=np.float32)
-eval_labels = np.empty((0), dtype=np.int32)
+# Init data lists
+# Can also initialize as arrays like:
+# train_data = np.empty((0, 64, 64, 3), dtype=np.float32)
+# but append operation is slow since it copies data.
+train_data = []
+train_labels = []
+eval_data = []
+eval_labels = []
 
 # Get a list of subdirectories in base_path, each is one class
 base_path = sys.argv[1]
@@ -36,7 +42,7 @@ class_paths.sort()
 class_id = 0
 for class_path in class_paths:
     # Print status
-    print('Reading class: ', class_path)
+    print('Reading class: {0} ({1}/{2})'.format(class_path, class_id + 1, num_classes))
 
     # Images base path
     img_path_full = os.path.join(train_data_path, class_path, 'images')
@@ -45,29 +51,32 @@ for class_path in class_paths:
     files = os.listdir(img_path_full)
     files = [os.path.join(img_path_full, f) for f in files]
 
-    for i in range(0, 450):
+    for i in range(0, images_per_class):
         # Decode image
         img = scipy.ndimage.imread(files[i], mode='RGB')
-        img = img.reshape(1, 64, 64, 3)
+        img = img.reshape(1, 64, 64, 3).tolist()
 
-        if i < 400:
+        if i < train_images_per_class:
             # Read first some files as training data
-            train_data = np.append(train_data, img, axis=0)
-            train_labels = np.append(train_labels, class_id)
+            train_data.append(img)
+            train_labels.append(class_id)
         else:
             # Read some more for evaluation data
-            eval_data = np.append(eval_data, img, axis=0)
-            eval_labels = np.append(eval_labels, class_id)
-
-        # Print status every 100 images
-        if i % 100 == 0:
-            print('Read ', i, ' images')
+            train_data.append(img)
+            train_labels.append(class_id)
 
     class_id += 1
-    if class_id == 10:
+    if class_id >= num_classes:
         break
 
+# Convert back to numpy arrays
+print('Converting to numpy array...', end='', flush=True)
+train_data = np.asarray(train_data, dtype=np.float32)
+train_labels = np.asarray(train_data, dtype=np.float32)
+eval_data = np.asarray(train_data, dtype=np.float32)
+eval_labels = np.asarray(train_data, dtype=np.float32)
 print('done', flush=True)
+
 print('train_data: ', train_data.shape)
 print('eval_data: ', eval_data.shape)
 
