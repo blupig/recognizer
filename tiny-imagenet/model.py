@@ -51,7 +51,7 @@ def cnn_model_fn(features, labels, mode):
     network = tf.layers.dropout(inputs=network, rate=0.5, training=(mode == tf.estimator.ModeKeys.TRAIN))
 
     # Logits layer
-    network = tf.layers.dense(inputs=network, units=10)
+    network = tf.layers.dense(inputs=network, units=20)
 
     # # Convolutional Layer #2 and Pooling Layer #2
     # conv2 = tf.layers.conv2d(inputs=pool1, filters=64, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
