@@ -16,13 +16,15 @@ def main(args):
         print('ERROR: No data path provided')
         return
 
+    base_path = args[1]
+
     print('Reading data...', end='', flush=True)
 
     # Init data arrays
-    train_data = np.load(os.path.join(base_path, 'train_data'))
-    train_labels = np.load(os.path.join(base_path, 'train_labels'))
-    eval_data = np.load(os.path.join(base_path, 'eval_data'))
-    eval_labels = np.load(os.path.join(base_path, 'eval_labels'))
+    train_data = np.load(os.path.join(base_path, 'train_data.npy'))
+    train_labels = np.load(os.path.join(base_path, 'train_labels.npy'))
+    eval_data = np.load(os.path.join(base_path, 'eval_data.npy'))
+    eval_labels = np.load(os.path.join(base_path, 'eval_labels.npy'))
 
     print('done', flush=True)
     print('train_data: ', train_data.shape)
