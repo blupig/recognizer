@@ -60,6 +60,8 @@ def main(args):
             break
 
     print('done', flush=True)
+    print('train_data: ', train_data.shape)
+    print('eval_data: ', eval_data.shape)
 
     # Create the Estimator
     imagenet_classifier = tf.estimator.Estimator(model_fn=model.cnn_model_fn,
@@ -74,9 +76,9 @@ def main(args):
         x={"x": train_data},
         y=train_labels,
         batch_size=100,
-        num_epochs=10,
+        num_epochs=None,
         shuffle=True)
-    imagenet_classifier.train(input_fn=train_input_fn)
+    imagenet_classifier.train(input_fn=train_input_fn, steps=10000)
 
     # Evaluate the model and print results
     eval_input_fn = tf.estimator.inputs.numpy_input_fn(
