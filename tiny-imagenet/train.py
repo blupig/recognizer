@@ -76,7 +76,7 @@ def main(args):
         x={"x": train_data},
         y=train_labels,
         batch_size=100,
-        num_epochs=200,
+        num_epochs=50,
         shuffle=True)
     imagenet_classifier.train(input_fn=train_input_fn)
 

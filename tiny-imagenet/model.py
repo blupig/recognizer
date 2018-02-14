@@ -16,7 +16,7 @@ def cnn_model_fn(features, labels, mode):
     # Convolutional Layer #1
     # Input shape: [batch_size, 64, 64, 3]
     # Output shape: [batch_size, 64, 64, 16]
-    network = tf.layers.conv2d(inputs=network, filters=16, kernel_size=[8, 8], padding="same", activation=tf.nn.relu)
+    network = tf.layers.conv2d(inputs=network, filters=16, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
 
     # Pooling Layer #1
     # Input shape: [batch_size, 64, 64, 16]
@@ -24,16 +24,16 @@ def cnn_model_fn(features, labels, mode):
     network = tf.layers.max_pooling2d(inputs=network, pool_size=[2, 2], strides=2)
 
     # Input shape: [batch_size, 32, 32, 16]
-    # Output shape: [batch_size, 32, 32, 32]
-    network = tf.layers.conv2d(inputs=network, filters=32, kernel_size=[6, 6], padding="same", activation=tf.nn.relu)
+    # Output shape: [batch_size, 32, 32, 64]
+    network = tf.layers.conv2d(inputs=network, filters=64, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
 
     # Input shape: [batch_size, 32, 32, 32]
-    # Output shape: [batch_size, 16, 16, 32]
+    # Output shape: [batch_size, 16, 16, 64]
     network = tf.layers.max_pooling2d(inputs=network, pool_size=[2, 2], strides=2)
 
-    # Input shape: [batch_size, 16, 16, 32]
+    # Input shape: [batch_size, 16, 16, 64]
     # Output shape: [batch_size, 16, 16, 32]
-    network = tf.layers.conv2d(inputs=network, filters=32, kernel_size=[4, 4], padding="same", activation=tf.nn.relu)
+    network = tf.layers.conv2d(inputs=network, filters=32, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
 
     # Input shape: [batch_size, 16, 16, 32]
     # Output shape: [batch_size, 8, 8, 32]
@@ -48,7 +48,7 @@ def cnn_model_fn(features, labels, mode):
     network = tf.layers.dense(inputs=network, units=512, activation=tf.nn.relu)
 
     # Dropout
-    network = tf.layers.dropout(inputs=network, rate=0.4, training=(mode == tf.estimator.ModeKeys.TRAIN))
+    network = tf.layers.dropout(inputs=network, rate=0.5, training=(mode == tf.estimator.ModeKeys.TRAIN))
 
     # Logits layer
     network = tf.layers.dense(inputs=network, units=10)
