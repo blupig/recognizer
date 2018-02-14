@@ -72,9 +72,9 @@ for class_path in class_paths:
 # Convert back to numpy arrays
 print('Converting to numpy array...', end='', flush=True)
 train_data = np.asarray(train_data, dtype=np.float32)
-train_labels = np.asarray(train_data, dtype=np.float32)
-eval_data = np.asarray(train_data, dtype=np.float32)
-eval_labels = np.asarray(train_data, dtype=np.float32)
+train_labels = np.asarray(train_labels, dtype=np.float32)
+eval_data = np.asarray(eval_data, dtype=np.float32)
+eval_labels = np.asarray(eval_labels, dtype=np.float32)
 print('done', flush=True)
 
 print('train_data: ', train_data.shape)
