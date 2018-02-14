@@ -62,8 +62,8 @@ for class_path in class_paths:
             train_labels.append(class_id)
         else:
             # Read some more for evaluation data
-            train_data.append(img)
-            train_labels.append(class_id)
+            eval_data.append(img)
+            eval_labels.append(class_id)
 
     class_id += 1
     if class_id >= num_classes:
@@ -77,8 +77,8 @@ eval_data = np.asarray(eval_data, dtype=np.float32)
 eval_labels = np.asarray(eval_labels, dtype=np.float32)
 print('done', flush=True)
 
-print('train_data: ', train_data.shape)
-print('eval_data: ', eval_data.shape)
+print('train_data:', train_data.shape, 'train_labels:', train_labels.shape)
+print('eval_data:', eval_data.shape, 'eval_data:', train_labels.shape)
 
 print('Saving arrays...', end='', flush=True)
 np.save(os.path.join(base_path, 'train_data.npy'), train_data)
