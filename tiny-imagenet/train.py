@@ -26,23 +26,27 @@ def main(args):
 
     # Get a list of subdirectories in base_path, each is one class
     base_path = args[1]
+    train_data_path = os.path.join(base_path, 'train')
     class_paths = []
-    for _, dirs, _ in os.walk(base_path):
+    for _, dirs, _ in os.walk(train_data_path):
         class_paths = dirs
         break  # Only need first level
+
+    # Sort paths
+    class_paths.sort()
 
     # Read images and assign labels
     class_id = 0
     for class_path in class_paths:
-        img_path_full = os.path.join(base_path, class_path, 'images')
+        img_path_full = os.path.join(train_data_path, class_path, 'images')
         files = os.listdir(img_path_full)
         files = [os.path.join(img_path_full, f) for f in files]
 
-        for i in range(0, 120):
+        for i in range(0, 180):
             img = scipy.ndimage.imread(files[i], mode='RGB')
             img = img.reshape(1, 64, 64, 3)
 
-            if i < 100:
+            if i < 150:
                 # Read first some files as training data
                 train_data = np.append(train_data, img, axis=0)
                 train_labels = np.append(train_labels, class_id)
@@ -69,10 +73,10 @@ def main(args):
     train_input_fn = tf.estimator.inputs.numpy_input_fn(
         x={"x": train_data},
         y=train_labels,
-        batch_size=10,
+        batch_size=100,
         num_epochs=None,
         shuffle=True)
-    imagenet_classifier.train(input_fn=train_input_fn, steps=10000)
+    imagenet_classifier.train(input_fn=train_input_fn, steps=20000)
 
     # Evaluate the model and print results
     eval_input_fn = tf.estimator.inputs.numpy_input_fn(
