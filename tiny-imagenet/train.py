@@ -42,11 +42,11 @@ def main(args):
         files = os.listdir(img_path_full)
         files = [os.path.join(img_path_full, f) for f in files]
 
-        for i in range(0, 180):
+        for i in range(0, 200):
             img = scipy.ndimage.imread(files[i], mode='RGB')
             img = img.reshape(1, 64, 64, 3)
 
-            if i < 150:
+            if i < 175:
                 # Read first some files as training data
                 train_data = np.append(train_data, img, axis=0)
                 train_labels = np.append(train_labels, class_id)
@@ -74,9 +74,9 @@ def main(args):
         x={"x": train_data},
         y=train_labels,
         batch_size=100,
-        num_epochs=None,
+        num_epochs=10,
         shuffle=True)
-    imagenet_classifier.train(input_fn=train_input_fn, steps=20000)
+    imagenet_classifier.train(input_fn=train_input_fn)
 
     # Evaluate the model and print results
     eval_input_fn = tf.estimator.inputs.numpy_input_fn(
