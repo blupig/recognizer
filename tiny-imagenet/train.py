@@ -76,9 +76,9 @@ def main(args):
         x={"x": train_data},
         y=train_labels,
         batch_size=100,
-        num_epochs=None,
+        num_epochs=500,
         shuffle=True)
-    imagenet_classifier.train(input_fn=train_input_fn, steps=10000)
+    imagenet_classifier.train(input_fn=train_input_fn)
 
     # Evaluate the model and print results
     eval_input_fn = tf.estimator.inputs.numpy_input_fn(
