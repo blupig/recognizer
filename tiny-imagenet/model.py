@@ -77,10 +77,10 @@ def cnn_model_fn(features, labels, mode):
 
     # Calculate metrics (TRAIN and EVAL)
     loss = tf.losses.sparse_softmax_cross_entropy(labels=labels, logits=network)
-    accuracy, _ = tf.metrics.accuracy(labels=labels, predictions=predictions["classes"])
+    accuracy = tf.metrics.accuracy(labels=labels, predictions=predictions['classes'])
 
     # Create logging hook
-    training_hook = tf.train.LoggingTensorHook({"loss": loss, "accuracy": accuracy}, every_n_iter=10)
+    training_hook = tf.train.LoggingTensorHook({'loss': loss, 'accuracy': accuracy[0], 'update_op': accuracy[1]}, every_n_iter=10)
 
     # Configure the Training Op (for TRAIN mode)
     if mode == tf.estimator.ModeKeys.TRAIN:
@@ -90,5 +90,5 @@ def cnn_model_fn(features, labels, mode):
 
     # Add evaluation metrics (for EVAL mode)
     if mode == tf.estimator.ModeKeys.EVAL:
-        eval_metric_ops = {"accuracy": accuracy}
+        eval_metric_ops = {'accuracy': accuracy}
         return tf.estimator.EstimatorSpec(mode=mode, loss=loss, eval_metric_ops=eval_metric_ops)
