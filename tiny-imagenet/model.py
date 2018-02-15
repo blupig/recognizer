@@ -68,22 +68,27 @@ def cnn_model_fn(features, labels, mode):
     # Generate predictions (EVAL and PREDICT)
     predictions = {
         "classes": tf.argmax(input=network, axis=1),
-        "probabilities": tf.nn.softmax(network, name="softmax_tensor")
+        "probabilities": tf.nn.softmax(network, name="softmax_tensor"),
+        "logits": network
     }
 
     if mode == tf.estimator.ModeKeys.PREDICT:
         return tf.estimator.EstimatorSpec(mode=mode, predictions=predictions)
 
-    # Calculate loss (TRAIN and EVAL)
+    # Calculate metrics (TRAIN and EVAL)
     loss = tf.losses.sparse_softmax_cross_entropy(labels=labels, logits=network)
+    accuracy, _ = tf.metrics.accuracy(labels=labels, predictions=predictions["classes"])
+
+    # Create logging hook
+    training_hook = tf.train.LoggingTensorHook({"loss": loss, "accuracy": accuracy}, every_n_iter=10)
 
     # Configure the Training Op (for TRAIN mode)
     if mode == tf.estimator.ModeKeys.TRAIN:
-        optimizer = tf.train.AdamOptimizer(learning_rate=0.0001)
+        optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
         train_op = optimizer.minimize(loss=loss, global_step=tf.train.get_global_step())
-        return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op)
+        return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op, training_hooks=[training_hook])
 
     # Add evaluation metrics (for EVAL mode)
     if mode == tf.estimator.ModeKeys.EVAL:
-        eval_metric_ops = {"accuracy": tf.metrics.accuracy(labels=labels, predictions=predictions["classes"])}
+        eval_metric_ops = {"accuracy": accuracy, "probabilities": predictions['probabilities']}
         return tf.estimator.EstimatorSpec(mode=mode, loss=loss, eval_metric_ops=eval_metric_ops)
