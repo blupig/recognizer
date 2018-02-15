@@ -51,7 +51,7 @@ def cnn_model_fn(features, labels, mode):
     network = tf.layers.dropout(inputs=network, rate=0.5, training=(mode == tf.estimator.ModeKeys.TRAIN))
 
     # Logits layer
-    network = tf.layers.dense(inputs=network, units=20)
+    network = tf.layers.dense(inputs=network, units=50)
 
     # # Convolutional Layer #2 and Pooling Layer #2
     # conv2 = tf.layers.conv2d(inputs=pool1, filters=64, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
@@ -80,11 +80,11 @@ def cnn_model_fn(features, labels, mode):
     accuracy = tf.metrics.accuracy(labels=labels, predictions=predictions['classes'])
 
     # Create logging hook
-    training_hook = tf.train.LoggingTensorHook({'loss': loss, 'accuracy': accuracy[0], 'update_op': accuracy[1]}, every_n_iter=10)
+    training_hook = tf.train.LoggingTensorHook({'accuracy': accuracy[0], 'update_op': accuracy[1]}, every_n_iter=100)
 
     # Configure the Training Op (for TRAIN mode)
     if mode == tf.estimator.ModeKeys.TRAIN:
-        optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
+        optimizer = tf.train.AdamOptimizer(learning_rate=0.0001)
         train_op = optimizer.minimize(loss=loss, global_step=tf.train.get_global_step())
         return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op, training_hooks=[training_hook])
 
