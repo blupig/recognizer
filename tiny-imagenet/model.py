@@ -90,5 +90,5 @@ def cnn_model_fn(features, labels, mode):
 
     # Add evaluation metrics (for EVAL mode)
     if mode == tf.estimator.ModeKeys.EVAL:
-        eval_metric_ops = {"accuracy": accuracy, "probabilities": predictions['probabilities']}
+        eval_metric_ops = {"accuracy": accuracy}
         return tf.estimator.EstimatorSpec(mode=mode, loss=loss, eval_metric_ops=eval_metric_ops)
