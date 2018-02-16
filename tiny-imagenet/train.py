@@ -33,8 +33,9 @@ def main(args):
     # Preprocessing
     print('Preprocessing...', end='', flush=True)
     train_data -= np.mean(train_data, axis=0)
-    # train_data /= np.std(train_data, axis=0)
+    train_data /= np.std(train_data, axis=0)
     eval_data -= np.mean(eval_data, axis=0)
+    eval_data /= np.std(eval_data, axis=0)
     print('done', flush=True)
 
     # Create the Estimator
