@@ -15,7 +15,7 @@ def cnn_model_fn(features, labels, mode):
 
     # Input shape: [batch_size, 64, 64, 3]
     # Output shape: [batch_size, 64, 64, 96]
-    network = tf.layers.conv2d(inputs=network, filters=32, kernel_size=[5, 5], padding="same", activation=tf.nn.relu, kernel_initializer=tf.truncated_normal_initializer(stddev=0.01))
+    network = tf.layers.conv2d(inputs=network, filters=32, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
 
     # In: [batch_size, 64, 64, 96]
     # Out: [batch_size, 32, 32, 96]
@@ -23,7 +23,7 @@ def cnn_model_fn(features, labels, mode):
 
     # Input shape: [batch_size, 32, 32, 96]
     # Output shape: [batch_size, 32, 32, 128]
-    network = tf.layers.conv2d(inputs=network, filters=64, kernel_size=[3, 3], padding="same", activation=tf.nn.relu, kernel_initializer=tf.truncated_normal_initializer(stddev=0.01))
+    network = tf.layers.conv2d(inputs=network, filters=64, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
 
     # Input shape: [batch_size, 32, 32, 128]
     # Output shape: [batch_size, 16, 16, 128]
@@ -31,8 +31,8 @@ def cnn_model_fn(features, labels, mode):
 
     # Input shape: [batch_size, 16, 16, 192]
     # Output shape: [batch_size, 16, 16, 192]
-    network = tf.layers.conv2d(inputs=network, filters=96, kernel_size=[3, 3], padding="same", activation=tf.nn.relu, kernel_initializer=tf.truncated_normal_initializer(stddev=0.01))
-    network = tf.layers.conv2d(inputs=network, filters=96, kernel_size=[3, 3], padding="same", activation=tf.nn.relu, kernel_initializer=tf.truncated_normal_initializer(stddev=0.01))
+    network = tf.layers.conv2d(inputs=network, filters=96, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
+    network = tf.layers.conv2d(inputs=network, filters=96, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
 
     # Input shape: [batch_size, 16, 16, 192]
     # Output shape: [batch_size, 8, 8, 192]

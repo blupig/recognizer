@@ -30,6 +30,13 @@ def main(args):
     print('train_data: ', train_data.shape)
     print('eval_data: ', eval_data.shape)
 
+    # Preprocessing
+    print('Preprocessing...', end='', flush=True)
+    train_data -= np.mean(train_data, axis=0)
+    # train_data /= np.std(train_data, axis=0)
+    eval_data -= np.mean(eval_data, axis=0)
+    print('done', flush=True)
+
     # Create the Estimator
     imagenet_classifier = tf.estimator.Estimator(model_fn=model.cnn_model_fn,
                                                  model_dir="tiny_imagenet_model")
