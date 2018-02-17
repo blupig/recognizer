@@ -8,6 +8,7 @@ def data_generators():
     train_datagen = ImageDataGenerator(
         featurewise_center=True,
         featurewise_std_normalization=True,
+        zca_whitening=True,
         rotation_range=40,
         width_shift_range=0.2,
         height_shift_range=0.2,
