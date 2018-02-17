@@ -15,7 +15,7 @@ def cnn_model_fn(features, labels, mode):
 
     # Input shape: [batch_size, 64, 64, 3]
     # Output shape: [batch_size, 64, 64, 96]
-    network = tf.layers.conv2d(inputs=network, filters=32, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
+    network = tf.layers.conv2d(inputs=network, filters=64, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)
 
     # In: [batch_size, 64, 64, 96]
     # Out: [batch_size, 32, 32, 96]
@@ -23,7 +23,7 @@ def cnn_model_fn(features, labels, mode):
 
     # Input shape: [batch_size, 32, 32, 96]
     # Output shape: [batch_size, 32, 32, 128]
-    network = tf.layers.conv2d(inputs=network, filters=64, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
+    network = tf.layers.conv2d(inputs=network, filters=96, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
 
     # Input shape: [batch_size, 32, 32, 128]
     # Output shape: [batch_size, 16, 16, 128]
@@ -31,8 +31,8 @@ def cnn_model_fn(features, labels, mode):
 
     # Input shape: [batch_size, 16, 16, 192]
     # Output shape: [batch_size, 16, 16, 192]
-    network = tf.layers.conv2d(inputs=network, filters=96, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
-    network = tf.layers.conv2d(inputs=network, filters=96, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
+    network = tf.layers.conv2d(inputs=network, filters=128, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
+    network = tf.layers.conv2d(inputs=network, filters=128, kernel_size=[3, 3], padding="same", activation=tf.nn.relu)
 
     # Input shape: [batch_size, 16, 16, 192]
     # Output shape: [batch_size, 8, 8, 192]
@@ -41,7 +41,7 @@ def cnn_model_fn(features, labels, mode):
     # Flatten
     # Input Tensor Shape: [batch_size, 8, 8, 192]
     # Output Tensor Shape: [batch_size, 8 * 8 * 192]
-    network = tf.reshape(network, [-1, 8 * 8 * 96])
+    network = tf.reshape(network, [-1, 8 * 8 * 128])
 
     # Dense layers
     network = tf.layers.dense(inputs=network, units=512, activation=tf.nn.relu)
@@ -51,7 +51,7 @@ def cnn_model_fn(features, labels, mode):
     network = tf.layers.dropout(inputs=network, rate=0.5, training=(mode == tf.estimator.ModeKeys.TRAIN))
 
     # Logits layer
-    network = tf.layers.dense(inputs=network, units=10)
+    network = tf.layers.dense(inputs=network, units=20)
 
     # # Convolutional Layer #2 and Pooling Layer #2
     # conv2 = tf.layers.conv2d(inputs=pool1, filters=64, kernel_size=[5, 5], padding="same", activation=tf.nn.relu)

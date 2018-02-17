@@ -1,6 +1,3 @@
-# Modified from https://github.com/tensorflow/tensorflow/blob/r1.5/tensorflow/examples/tutorials/layers/cnn_mnist.py
-# Copyright 2016 The TensorFlow Authors. All Rights Reserved.
-
 # Imports
 from __future__ import absolute_import
 from __future__ import division

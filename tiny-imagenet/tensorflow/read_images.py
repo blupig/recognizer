@@ -9,7 +9,7 @@ import scipy.ndimage
 import sys
 
 # Configurations
-num_classes = 10
+num_classes = 20
 images_per_class = 450
 train_images_per_class = 400
 
