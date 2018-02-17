@@ -6,6 +6,8 @@ def data_generators():
     base_path = 'tiny-imagenet-200'
 
     train_datagen = ImageDataGenerator(
+        featurewise_center=True,
+        featurewise_std_normalization=True,
         rotation_range=40,
         width_shift_range=0.2,
         height_shift_range=0.2,
