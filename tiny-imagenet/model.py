@@ -39,7 +39,7 @@ def cnn_model():
 
     # Compile modle
     model.compile(optimizer=sgd,  # sgd
-                  loss='sparse_categorical_crossentropy',  # sparse_categorical_crossentropy
-                  metrics=['accuracy', metrics.sparse_top_k_categorical_accuracy])
+                  loss='categorical_crossentropy',  # sparse_categorical_crossentropy
+                  metrics=['accuracy', metrics.top_k_categorical_accuracy])
 
     return model

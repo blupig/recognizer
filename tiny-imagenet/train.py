@@ -3,11 +3,19 @@ import data_input
 import model
 
 # Config
-epochs = 50
-workers = 3
+epochs = 100
+workers = 6
+data_path = 'tiny-imagenet-200'
 
 # Build data generators
-train_gen, val_gen = data_input.data_generators()
+# Sample data for generators first
+x_samples = data_input.load_sample_data(data_path)
+print(x_samples[0])
+train_gen, val_gen = data_input.data_generators(data_path, x_samples=x_samples)
+for x_batch, y_batch in train_gen:
+    print(x_batch[0])
+    break
+
 
 # Build and compile model
 m = model.cnn_model()
