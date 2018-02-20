@@ -25,13 +25,13 @@ def load_sample_data(base_path):
 def data_generators(base_path, x_samples=None):
 
     train_datagen = ImageDataGenerator(
-        featurewise_center=True,
-        featurewise_std_normalization=True,
+        # featurewise_center=True,
+        # featurewise_std_normalization=True,
         # zca_whitening=True,
-        rotation_range=40,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        # rescale=1./255,
+        rotation_range=60,
+        width_shift_range=0.3,
+        height_shift_range=0.3,
+        rescale=1./255,
         shear_range=0.2,
         zoom_range=0.2,
         horizontal_flip=True,
