@@ -11,31 +11,48 @@ def cnn_model(gpus=1):
     # Create new template model
     tmpl_model = Sequential()
 
-    # Out: [-1, 32, 32, 96]
-    tmpl_model.add(Conv2D(filters=96, kernel_size=[5, 5], padding='same', activation='relu', input_shape=(64, 64, 3)))
+    # In: [-1, 64, 64, 3]
+    tmpl_model.add(Conv2D(filters=96, kernel_size=[5, 5], padding='same', input_shape=(64, 64, 3)))
+    # tmpl_model.add(BatchNormalization())
+    tmpl_model.add(Activation('relu'))
+
     tmpl_model.add(MaxPooling2D(pool_size=[2, 2]))
 
-    # Out: [-1, 16, 16, 192]
-    tmpl_model.add(Conv2D(128, [3, 3], padding='same', activation='relu'))
-    tmpl_model.add(Conv2D(192, [3, 3], padding='same', activation='relu'))
+    # In: [-1, 32, 32, 96]
+    tmpl_model.add(Conv2D(128, [3, 3], padding='same'))
+    # tmpl_model.add(BatchNormalization())
+    tmpl_model.add(Activation('relu'))
+
+    tmpl_model.add(Conv2D(192, [3, 3], padding='same'))
+    # tmpl_model.add(BatchNormalization())
+    tmpl_model.add(Activation('relu'))
+
     tmpl_model.add(MaxPooling2D([2, 2]))
 
-    # Out: [-1, 16, 16, 256]
-    tmpl_model.add(Conv2D(256, [3, 3], padding='same', activation='relu'))
-    # tmpl_model.add(MaxPooling2D([2, 2]))
+    # In: [-1, 16, 16, 192]
+    tmpl_model.add(Conv2D(256, [3, 3], padding='same'))
+    # tmpl_model.add(BatchNormalization())
+    tmpl_model.add(Activation('relu'))
 
-    # Out: [-1, 16, 16, 256]
-    tmpl_model.add(Conv2D(256, [3, 3], padding='same', activation='relu'))
-    # tmpl_model.add(Conv2D(256, [3, 3], padding='same', activation='relu'))
+    tmpl_model.add(Conv2D(256, [3, 3], padding='same'))
+    # tmpl_model.add(BatchNormalization())
+    tmpl_model.add(Activation('relu'))
+
+    tmpl_model.add(Conv2D(128, [3, 3], padding='same', activation='relu'))
     tmpl_model.add(MaxPooling2D([2, 2]))
 
     # Flatten to 1-D vector
+    # In: [-1, 8, 8, 192]
     tmpl_model.add(Flatten())
 
+    # Dense
     tmpl_model.add(Dense(units=1024, activation='relu'))
 
     # Dropout
-    # tmpl_model.add(Dropout(0.5))
+    tmpl_model.add(Dropout(0.5))
+
+    # Dense
+    tmpl_model.add(Dense(units=512, activation='relu'))
 
     # Logits layer
     tmpl_model.add(Dense(units=20, activation='softmax'))
