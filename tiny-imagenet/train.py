@@ -1,4 +1,5 @@
 # Train
+import sys
 import datetime
 from keras.callbacks import TensorBoard
 import data_input
@@ -28,8 +29,12 @@ for x_batch, y_batch in train_gen:
 train_model, tmpl_model = model.cnn_model(gpus=2)
 
 # Tensorboard
+run_comment = '0'
+if len(sys.argv) > 1:
+    run_comment = sys.argv[1]
+
 datetime_str = '{0:%y%m%d_%H%M}'.format(datetime.datetime.now())
-tensorboard = TensorBoard(log_dir='logs/' + datetime_str)
+tensorboard = TensorBoard(log_dir='logs/' + datetime_str + '_' + run_comment)
 
 # Train
 train_model.fit_generator(

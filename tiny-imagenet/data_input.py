@@ -10,7 +10,7 @@ def load_sample_data(base_path):
     sample_gen = sample_datagen.flow_from_directory(
         directory=path.join(base_path, 'train'),
         target_size=(64, 64),
-        batch_size=2000,
+        batch_size=5000,
         class_mode='categorical')
 
     for x_batch, y_batch in sample_gen:
