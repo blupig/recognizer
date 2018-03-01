@@ -6,19 +6,19 @@ import data_input
 import model
 
 # Config
-epochs = 100
-workers = 6
+epochs = 200
+workers = 8
 data_path = 'tiny-imagenet-200'
 
 # Sample data for generators
-x_samples = data_input.load_sample_data(data_path)
-for n in x_samples[0][0]:
-    print(n, end=' ')
+# x_samples = data_input.load_sample_data(data_path)
+# for n in x_samples[0][0]:
+#     print(n, end=' ')
 
-print()  # New line
+# print()  # New line
 
 # Build data generators
-train_gen, val_gen = data_input.data_generators(data_path, x_samples=x_samples)
+train_gen, val_gen = data_input.data_generators(data_path, x_samples=None)
 for x_batch, y_batch in train_gen:
     for n in x_batch[0][0]:
         print(n, end=' ')
@@ -42,8 +42,9 @@ train_model.fit_generator(
     validation_data=val_gen,
     epochs=epochs,
     workers=workers,
+    use_multiprocessing=True,
     verbose=2,
     callbacks=[tensorboard])
 
 # Save model
-tmpl_model.save('model.h5')
+tmpl_model.save_weights('model.h5')

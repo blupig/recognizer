@@ -55,7 +55,7 @@ def cnn_model(gpus=1):
     tmpl_model.add(Dense(units=512, activation='relu'))
 
     # Logits layer
-    tmpl_model.add(Dense(units=20, activation='softmax'))
+    tmpl_model.add(Dense(units=200, activation='softmax'))
 
     # Optimizers
     adadelta = optimizers.Adadelta()

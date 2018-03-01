@@ -10,7 +10,7 @@ def load_sample_data(base_path):
     sample_gen = sample_datagen.flow_from_directory(
         directory=path.join(base_path, 'train'),
         target_size=(64, 64),
-        batch_size=5000,
+        batch_size=1000,
         class_mode='categorical')
 
     for x_batch, y_batch in sample_gen:
@@ -21,10 +21,10 @@ def load_sample_data(base_path):
 
 
 # Create data generators with augmentation from directories
-def data_generators(base_path, x_samples, x_train=None, y_train=None, x_val=None, y_val=None):
+def data_generators(base_path, x_samples):
 
     train_datagen = ImageDataGenerator(
-        featurewise_center=True,
+        featurewise_center=False,
         # zca_whitening=True,
         rotation_range=45,
         width_shift_range=0.2,
@@ -36,16 +36,8 @@ def data_generators(base_path, x_samples, x_train=None, y_train=None, x_val=None
         fill_mode='nearest')
 
     val_datagen = ImageDataGenerator(
-        featurewise_center=True,
+        featurewise_center=False,
         rescale=1./255)
-
-    # Use data all from memory if provided
-    if x_train is not None:
-        train_datagen.fit(x_train)
-        val_datagen.fit(x_train)
-        train_gen = train_datagen.flow(x_train, y_train, batch_size=100)
-        val_gen = val_datagen.flow(x_val, y_val, batch_size=100)
-        return train_gen, val_gen
 
     # Fit generator if x samples provided
     if x_samples is not None:
@@ -55,13 +47,32 @@ def data_generators(base_path, x_samples, x_train=None, y_train=None, x_val=None
     train_gen = train_datagen.flow_from_directory(
         directory=path.join(base_path, 'train'),
         target_size=(64, 64),
-        batch_size=100,
+        batch_size=512,
         class_mode='categorical')
 
     val_gen = val_datagen.flow_from_directory(
         directory=path.join(base_path, 'val'),
         target_size=(64, 64),
-        batch_size=100,
+        batch_size=512,
         class_mode='categorical')
 
     return train_gen, val_gen
+
+
+def predict_generator(base_path, x_samples):
+    predict_datagen = ImageDataGenerator(
+        featurewise_center=False,
+        rescale=1./255)
+
+    # Fit generator if x samples provided
+    if x_samples is not None:
+        predict_datagen.fit(x_samples / 255)
+
+    predict_gen = predict_datagen.flow_from_directory(
+        directory=path.join(base_path, 'predict'),
+        target_size=(64, 64),
+        batch_size=1,
+        class_mode=None,
+        shuffle=False)
+
+    return predict_gen
