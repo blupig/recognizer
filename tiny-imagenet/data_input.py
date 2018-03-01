@@ -1,5 +1,6 @@
 # Data input
 from os import path
+import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
 
@@ -71,8 +72,22 @@ def predict_generator(base_path, x_samples):
     predict_gen = predict_datagen.flow_from_directory(
         directory=path.join(base_path, 'predict'),
         target_size=(64, 64),
-        batch_size=1,
+        batch_size=512,
         class_mode=None,
         shuffle=False)
 
     return predict_gen
+
+
+# Read files from a generator, return array and file names
+def read_files_into_memory(gen):
+    filenames = gen.filenames
+    for i in range(len(gen)):
+        x_batch = next(gen)
+        # Highly inefficient append operation
+        if 'predit_x' not in locals():
+            predit_x = x_batch
+        else:
+            predit_x = np.append(predit_x, x_batch, axis=0)
+
+    return predit_x, filenames

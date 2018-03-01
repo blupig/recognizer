@@ -10,45 +10,37 @@ import class_names
 # Data path
 base_path = 'tiny-imagenet-200'
 
-# Sample data for generators
-# x_samples = data_input.load_sample_data(base_path)
-# for n in x_samples[0][0]:
-#     print(n, end=' ')
-
-# print()  # New line
-
 # Build data generators
 predict_gen = data_input.predict_generator(base_path, x_samples=None)
-for x_batch in predict_gen:
-    for n in x_batch[0][0]:
-        print(n, end=' ')
-    print()  # New line
-    break
+
+# Read data
+predit_x, filenames = data_input.read_files_into_memory(predict_gen)
+print(predit_x[0][0])
 
 # Build and compile model
 print('Loading model...')
 predict_model, _ = model.cnn_model(gpus=0)
-predict_model.load_weights('model.h5')
+predict_model.load_weights('model_weights_180301.h5')
 
 # Train
 print('Predicting...')
-results = predict_model.predict_generator(
-    predict_gen,
-    workers=1,
-    use_multiprocessing=False,
-    verbose=1)
+results = predict_model.predict(predit_x, batch_size=1, verbose=1)
 
-c_names = class_names.get_names(base_path)
+# Get class names
+cls_names = class_names.get_names(base_path)
 
 # Walk through results
-for r in results:
-    print('---')
-    # Sort array in descending order, retrieve indexes
-    sorted_idx = np.argsort(r)[::-1]
+for i in range(len(results)):
+    filename = filenames[i]
+    probabilities = results[i]
+    print('--- ' + filename)
+
+    # Sort array in descending order, retrieve indexes (class_ids)
+    sorted_idx = np.argsort(probabilities)[::-1]
 
     k = 0
-    for i in sorted_idx:
-        print(i, c_names[i], r[i])
+    for clsid in sorted_idx:
+        print(clsid, cls_names[clsid], probabilities[clsid])
         # Only top 5
         k += 1
         if k >= 5:
