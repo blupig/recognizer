@@ -1,48 +1,48 @@
-# Train
+# yl-recognizer
+# Copyright (C) 2017-2018 Yunzhu Li
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+# Run predition on images in test_images
 import sys
 import numpy as np
 from keras.models import load_model
-import data_input
+import data_utils
 import model
-import class_names
 
 # Config
 # Data path
-base_path = 'tiny-imagenet-200'
+test_images_path = 'test_images'
 
 # Build data generators
-predict_gen = data_input.predict_generator(base_path, x_samples=None)
+predict_gen = data_utils.predict_generator(test_images_path, x_samples=None)
 
 # Read data
-predit_x, filenames = data_input.read_files_into_memory(predict_gen)
+predit_x, filenames = data_utils.read_files_into_memory(predict_gen)
 print(predit_x[0][0])
 
 # Build and compile model
 print('Loading model...')
-predict_model, _ = model.cnn_model(gpus=0)
-predict_model.load_weights('model_weights_180301.h5')
+predict_model, _ = model.load('model_weights_180301.h5')
 
-# Train
+# Predit
 print('Predicting...')
-results = predict_model.predict(predit_x, batch_size=1, verbose=1)
-
-# Get class names
-cls_names = class_names.get_names(base_path)
+preds = predict_model.predict(predit_x, batch_size=1, verbose=1)
+results = data_utils.decode_predictions(preds)
 
 # Walk through results
 for i in range(len(results)):
     filename = filenames[i]
-    probabilities = results[i]
-    print('--- ' + filename)
-
-    # Sort array in descending order, retrieve indexes (class_ids)
-    sorted_idx = np.argsort(probabilities)[::-1]
-
-    k = 0
-    for clsid in sorted_idx:
-        print(clsid, cls_names[clsid], probabilities[clsid])
-        # Only top 5
-        k += 1
-        if k >= 5:
-            break
-    print('')
+    print('\n--- ' + filename)
+    print(results[i])

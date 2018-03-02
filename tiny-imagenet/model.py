@@ -1,3 +1,19 @@
+# yl-recognizer
+# Copyright (C) 2017-2018 Yunzhu Li
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
 # CNN model
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, BatchNormalization
@@ -7,7 +23,15 @@ from keras import metrics
 from keras.utils import multi_gpu_model
 
 
-def cnn_model(gpus=1):
+# Load saved model
+def load(weights_path):
+    model, tmpl_model = build(gpus=0)
+    model.load_weights(weights_path)
+    return model, tmpl_model
+
+
+# Build model
+def build(gpus=1):
     # Create new template model
     tmpl_model = Sequential()
 
