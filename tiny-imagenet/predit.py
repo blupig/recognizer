@@ -22,7 +22,10 @@ import data_utils
 import model
 
 # Config
-# Data path
+# Trained model
+trained_model_path = 'trained_models/180301_tiny_imagenet_weights.h5'
+
+# Test data path
 test_images_path = 'test_images'
 
 # Build data generators
@@ -34,14 +37,14 @@ print(predit_x[0][0])
 
 # Build and compile model
 print('Loading model...')
-predict_model, _ = model.load('model_weights_180301.h5')
+predict_model, _ = model.load(trained_model_path)
 
 # Predit
 print('Predicting...')
 preds = predict_model.predict(predit_x, batch_size=1, verbose=1)
 results = data_utils.decode_predictions(preds)
 
-# Walk through results
+# Iterate through results
 for i in range(len(results)):
     filename = filenames[i]
     print('\n--- ' + filename)

@@ -24,25 +24,8 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing.image import img_to_array
 
 
-# Read sample images
-def load_sample_data(base_path):
-    print('[PROG] Sampling data for fitting ImageDataGenerator...')
-    sample_datagen = ImageDataGenerator()
-    sample_gen = sample_datagen.flow_from_directory(
-        directory=path.join(base_path, 'train'),
-        target_size=(64, 64),
-        batch_size=1000,
-        class_mode='categorical')
-
-    for x_batch, y_batch in sample_gen:
-        print('[PROG] Done sampling data')
-        return x_batch
-
-    return None
-
-
 # Create data generators with augmentation from directories
-def data_generators(base_path, x_samples):
+def train_generators(base_path, x_samples):
 
     train_datagen = ImageDataGenerator(
         featurewise_center=False,
@@ -99,6 +82,23 @@ def predict_generator(base_path, x_samples):
     return predict_gen
 
 
+# Read sample images
+def load_sample_data(base_path):
+    print('[PROG] Sampling data for fitting ImageDataGenerator...')
+    sample_datagen = ImageDataGenerator()
+    sample_gen = sample_datagen.flow_from_directory(
+        directory=path.join(base_path, 'train'),
+        target_size=(64, 64),
+        batch_size=1000,
+        class_mode='categorical')
+
+    for x_batch, y_batch in sample_gen:
+        print('[PROG] Done sampling data')
+        return x_batch
+
+    return None
+
+
 # Read files from a generator, return array and file names
 def read_files_into_memory(gen):
     filenames = gen.filenames
@@ -132,7 +132,7 @@ def image_array_from_bytes(data):
     return arr
 
 
-# Return top 5 probabilities and class names
+# Return top 5 classes by probabilities
 def decode_predictions(pred):
     # Get class names
     cls_names = class_names()

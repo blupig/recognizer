@@ -18,7 +18,7 @@
 import sys
 import datetime
 from keras.callbacks import TensorBoard
-import data_input
+import data_utils
 import model
 
 # Config
@@ -27,14 +27,14 @@ workers = 8
 data_path = 'tiny-imagenet-200'
 
 # Sample data for generators
-# x_samples = data_input.load_sample_data(data_path)
+# x_samples = data_utils.load_sample_data(data_path)
 # for n in x_samples[0][0]:
 #     print(n, end=' ')
 
 # print()  # New line
 
 # Build data generators
-train_gen, val_gen = data_input.data_generators(data_path, x_samples=None)
+train_gen, val_gen = data_utils.train_generators(data_path, x_samples=None)
 for x_batch, y_batch in train_gen:
     for n in x_batch[0][0]:
         print(n, end=' ')
@@ -42,7 +42,7 @@ for x_batch, y_batch in train_gen:
     break
 
 # Build and compile model
-train_model, tmpl_model = model.cnn_model(gpus=2)
+train_model, tmpl_model = model.build(gpus=0)
 
 # Tensorboard
 run_comment = '0'
@@ -63,4 +63,4 @@ train_model.fit_generator(
     callbacks=[tensorboard])
 
 # Save model
-tmpl_model.save_weights('model.h5')
+tmpl_model.save_weights('weights.h5')

@@ -16,11 +16,13 @@
 
 # Train
 import sys
-import numpy as np
 import flask
 from flask import request
 import data_utils
 import model
+
+# Config
+trained_model_path = 'trained_models/180301_tiny_imagenet_weights.h5'
 
 # Global model var
 predict_model = None
@@ -29,11 +31,13 @@ predict_model = None
 app = flask.Flask(__name__)
 
 
+# Health route
 @app.route('/health')
 def health():
     return 'ok'
 
 
+# Annotate route
 @app.route('/images/annotate', methods=['POST'])
 def annotate():
     status = 200
@@ -44,13 +48,10 @@ def annotate():
     if request.method == 'POST':
         try:
             # Read data
-            img_data = request.files['image'].read()
-
-            # Decode and pre-process
-            img_array = data_utils.image_array_from_bytes(img_data)
+            img_bytes = request.files['image'].read()
 
             # Annotate
-            results = annotate_image(img_array)
+            results = annotate_image(img_bytes)
         except:
             status = 400
             error = 'Failed to receive and process image'
@@ -62,9 +63,12 @@ def annotate():
 
 
 # Annotate
-def annotate_image(image_array):
+def annotate_image(image_bytes):
+    # Decode and pre-process
+    img_array = data_utils.image_array_from_bytes(image_bytes)
+
     # Predict and decode result
-    preds = predict_model.predict(image_array, verbose=0)
+    preds = predict_model.predict(img_array, verbose=0)
     results = data_utils.decode_predictions(preds)
     if len(results) > 0:
         return results[0]
@@ -72,18 +76,14 @@ def annotate_image(image_array):
     return None
 
 
-def serve():
-    app.run()
-
-
 def main():
-    # Load model
+    print('Starting API server...')
     print('Loading model...')
     global predict_model
-    predict_model, _ = model.load('model_weights_180301.h5')
+    predict_model, _ = model.load(trained_model_path)
 
     # Serve
-    app.run()
+    app.run(host='0.0.0.0', port=8000)
 
 if __name__ == "__main__":
     main()
