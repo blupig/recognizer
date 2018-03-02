@@ -1,18 +1,20 @@
-# yl-recognizer
-# Copyright (C) 2017-2018 Yunzhu Li
+'''
+yl-recognizer
+Copyright (C) 2017-2018 Yunzhu Li
 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
 
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+'''
 
 # CNN model
 from keras.models import Sequential
@@ -89,14 +91,14 @@ def build(gpus=1):
     # lr = self.lr * (1. / (1. + self.decay * self.iterations))
     sgd = optimizers.SGD(lr=0.01, momentum=0.9, nesterov=True)
 
-    # The tmpl_model to be trained
+    # The model to be trained
     train_model = tmpl_model
 
     if gpus > 1:
-        # Train on parallel tmpl_model
+        # Train on parallel model
         train_model = multi_gpu_model(tmpl_model, gpus=gpus)
 
-    # Compile modle
+    # Compile model
     train_model.compile(optimizer=sgd,
                         loss='categorical_crossentropy',
                         metrics=['accuracy', metrics.top_k_categorical_accuracy])

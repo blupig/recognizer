@@ -1,4 +1,4 @@
-## Image Classification API
+## Image Classification Model & API
 
 Image classification (CNN) with Keras + TensorFlow on Tiny ImageNet dataset
 
