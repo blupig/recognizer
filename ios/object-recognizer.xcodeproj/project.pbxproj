@@ -13,6 +13,7 @@
 		79D25481204A57E300F796FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79D25480204A57E300F796FD /* Assets.xcassets */; };
 		79D25484204A57E300F796FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79D25482204A57E300F796FD /* LaunchScreen.storyboard */; };
 		79D25491204A628200F796FD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D25490204A628200F796FD /* MainViewController.swift */; };
+		79DDF2D9204CAE5E0055ED50 /* VideoCaptureCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DDF2D8204CAE5E0055ED50 /* VideoCaptureCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		79D25483204A57E300F796FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		79D25485204A57E300F796FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79D25490204A628200F796FD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		79DDF2D8204CAE5E0055ED50 /* VideoCaptureCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCaptureCoordinator.swift; sourceTree = "<group>"; };
 		AD5EA3A7D43716CEED0E4170 /* Pods_object_recognizer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_object_recognizer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -84,27 +86,11 @@
 			path = "object-recognizer";
 			sourceTree = "<group>";
 		};
-		79D2548B204A583C00F796FD /* ui */ = {
-			isa = PBXGroup;
-			children = (
-				79D2547D204A57E300F796FD /* Main.storyboard */,
-				79D25482204A57E300F796FD /* LaunchScreen.storyboard */,
-			);
-			path = ui;
-			sourceTree = "<group>";
-		};
-		79D2548C204A585600F796FD /* main */ = {
-			isa = PBXGroup;
-			children = (
-				79D25479204A57E300F796FD /* AppDelegate.swift */,
-			);
-			path = main;
-			sourceTree = "<group>";
-		};
 		79D2548D204A587F00F796FD /* res */ = {
 			isa = PBXGroup;
 			children = (
-				79D2548B204A583C00F796FD /* ui */,
+				79D25482204A57E300F796FD /* LaunchScreen.storyboard */,
+				79D2547D204A57E300F796FD /* Main.storyboard */,
 				79D25480204A57E300F796FD /* Assets.xcassets */,
 				79D25485204A57E300F796FD /* Info.plist */,
 			);
@@ -114,18 +100,11 @@
 		79D2548E204A589400F796FD /* src */ = {
 			isa = PBXGroup;
 			children = (
-				79D2548F204A626E00F796FD /* ui */,
-				79D2548C204A585600F796FD /* main */,
+				79D25479204A57E300F796FD /* AppDelegate.swift */,
+				79D25490204A628200F796FD /* MainViewController.swift */,
+				79DDF2D8204CAE5E0055ED50 /* VideoCaptureCoordinator.swift */,
 			);
 			path = src;
-			sourceTree = "<group>";
-		};
-		79D2548F204A626E00F796FD /* ui */ = {
-			isa = PBXGroup;
-			children = (
-				79D25490204A628200F796FD /* MainViewController.swift */,
-			);
-			path = ui;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +244,7 @@
 			files = (
 				79D2547A204A57E300F796FD /* AppDelegate.swift in Sources */,
 				79D25491204A628200F796FD /* MainViewController.swift in Sources */,
+				79DDF2D9204CAE5E0055ED50 /* VideoCaptureCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +383,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H36CP54VX;
 				INFOPLIST_FILE = "$(SRCROOT)/object-recognizer/res/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.blupig.object-recognizer";
@@ -418,6 +399,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H36CP54VX;
 				INFOPLIST_FILE = "$(SRCROOT)/object-recognizer/res/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.blupig.object-recognizer";
