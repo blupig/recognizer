@@ -15,6 +15,7 @@
 		79D25491204A628200F796FD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D25490204A628200F796FD /* MainViewController.swift */; };
 		79DDF2D9204CAE5E0055ED50 /* VideoCaptureCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DDF2D8204CAE5E0055ED50 /* VideoCaptureCoordinator.swift */; };
 		79DDF2DB204CD1F30055ED50 /* BPAIBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DDF2DA204CD1F30055ED50 /* BPAIBackend.swift */; };
+		79DDF2DD204CF3110055ED50 /* AnnotationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DDF2DC204CF3110055ED50 /* AnnotationTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		79D25490204A628200F796FD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		79DDF2D8204CAE5E0055ED50 /* VideoCaptureCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCaptureCoordinator.swift; sourceTree = "<group>"; };
 		79DDF2DA204CD1F30055ED50 /* BPAIBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPAIBackend.swift; sourceTree = "<group>"; };
+		79DDF2DC204CF3110055ED50 /* AnnotationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationTableViewCell.swift; sourceTree = "<group>"; };
 		AD5EA3A7D43716CEED0E4170 /* Pods_object_recognizer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_object_recognizer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -103,9 +105,10 @@
 			isa = PBXGroup;
 			children = (
 				79D25479204A57E300F796FD /* AppDelegate.swift */,
-				79D25490204A628200F796FD /* MainViewController.swift */,
-				79DDF2D8204CAE5E0055ED50 /* VideoCaptureCoordinator.swift */,
 				79DDF2DA204CD1F30055ED50 /* BPAIBackend.swift */,
+				79DDF2D8204CAE5E0055ED50 /* VideoCaptureCoordinator.swift */,
+				79D25490204A628200F796FD /* MainViewController.swift */,
+				79DDF2DC204CF3110055ED50 /* AnnotationTableViewCell.swift */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79DDF2DD204CF3110055ED50 /* AnnotationTableViewCell.swift in Sources */,
 				79DDF2DB204CD1F30055ED50 /* BPAIBackend.swift in Sources */,
 				79D2547A204A57E300F796FD /* AppDelegate.swift in Sources */,
 				79D25491204A628200F796FD /* MainViewController.swift in Sources */,

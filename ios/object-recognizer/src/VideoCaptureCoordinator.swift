@@ -1,5 +1,5 @@
 //
-// yl-recognizer
+// object-recognizer
 // Copyright (C) 2017-2018 Yunzhu Li
 //
 // This program is free software: you can redistribute it and/or modify
@@ -123,10 +123,8 @@ class VideoCaptureCoordinator: NSObject, AVCaptureVideoDataOutputSampleBufferDel
 
     // MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-
         if _captureNextFrame {
             _captureNextFrame = false
-
             // Convert to UIImage
             if let uiImage = cmBufferToImage(cmBuffer: sampleBuffer) {
                 // Give to delegate in main thread

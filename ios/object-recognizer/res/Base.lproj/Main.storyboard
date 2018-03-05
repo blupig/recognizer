@@ -74,15 +74,55 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TblCellAnnotation" id="8Oo-Qu-1sS">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AnnotationTableViewCell" rowHeight="55" id="8Oo-Qu-1sS" customClass="AnnotationTableViewCell" customModule="object_recognizer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8Oo-Qu-1sS" id="awf-3Q-ypK">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="KfT-Ho-PJD">
+                                                    <rect key="frame" x="12" y="41" width="296" height="2"/>
+                                                    <color key="progressTintColor" red="0.0" green="0.50196078430000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </progressView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYD-fQ-WOQ">
+                                                    <rect key="frame" x="12" y="12" width="210" height="19.5"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="16"/>
+                                                    <color key="textColor" white="0.19685872395833334" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ujz-iY-doq">
+                                                    <rect key="frame" x="238" y="12" width="70" height="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="70" id="bOJ-va-R7H"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="14"/>
+                                                    <color key="textColor" white="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="IYD-fQ-WOQ" firstAttribute="top" secondItem="awf-3Q-ypK" secondAttribute="top" constant="12" id="2qU-5a-GLI"/>
+                                                <constraint firstItem="KfT-Ho-PJD" firstAttribute="leading" secondItem="awf-3Q-ypK" secondAttribute="leading" constant="12" id="4o6-n4-w0K"/>
+                                                <constraint firstAttribute="trailing" secondItem="ujz-iY-doq" secondAttribute="trailing" constant="12" id="51G-BU-FsA"/>
+                                                <constraint firstAttribute="trailing" secondItem="KfT-Ho-PJD" secondAttribute="trailing" constant="12" id="BaM-Uz-iO8"/>
+                                                <constraint firstAttribute="bottom" secondItem="KfT-Ho-PJD" secondAttribute="bottom" constant="12" id="CUu-WH-qlc"/>
+                                                <constraint firstItem="ujz-iY-doq" firstAttribute="leading" secondItem="IYD-fQ-WOQ" secondAttribute="trailing" constant="16" id="WiG-er-cLR"/>
+                                                <constraint firstItem="IYD-fQ-WOQ" firstAttribute="leading" secondItem="awf-3Q-ypK" secondAttribute="leading" constant="12" id="dmt-6l-gC4"/>
+                                                <constraint firstItem="ujz-iY-doq" firstAttribute="top" secondItem="awf-3Q-ypK" secondAttribute="top" constant="12" id="gup-gi-npf"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="lblAnnotationName" destination="IYD-fQ-WOQ" id="cOI-8X-vpv"/>
+                                            <outlet property="lblProbability" destination="ujz-iY-doq" id="7Bd-pw-QRd"/>
+                                            <outlet property="pbProbability" destination="KfT-Ho-PJD" id="btv-5G-zwI"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Nmb-ne-OmE" id="YZC-7l-4cS"/>
+                                    <outlet property="delegate" destination="Nmb-ne-OmE" id="f3C-sg-mhx"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -110,6 +150,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="lblCameraInfo" destination="N7O-nw-NYe" id="mp9-6h-ICL"/>
+                        <outlet property="tableView" destination="c5o-2B-Rq9" id="KAV-zP-Eac"/>
                         <outlet property="viewCamera" destination="ZaE-RB-xtY" id="Eh7-ze-QfS"/>
                     </connections>
                 </viewController>

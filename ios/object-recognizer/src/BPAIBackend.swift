@@ -1,5 +1,5 @@
 //
-// yl-recognizer
+// object-recognizer
 // Copyright (C) 2017-2018 Yunzhu Li
 //
 // This program is free software: you can redistribute it and/or modify
@@ -43,12 +43,6 @@ class BPAIBackend: NSObject {
             // Check request encoding result
             switch encodingResult {
             case .success(request: let upload, streamingFromDisk: _, streamFileURL: _):
-//                upload.validate(statusCode: 200..<300).responseData(completionHandler: { (response: DataResponse<Data>) in
-//                    let s = String(data: response.result.value!, encoding: String.Encoding.utf8)
-//                    debugPrint(s!)
-//                })
-
-
                 upload.validate(statusCode: 200..<300).responseObject(completionHandler: { (response: DataResponse<ImageAnnotationResponse>) in
                     // Check response status
                     switch response.result {
