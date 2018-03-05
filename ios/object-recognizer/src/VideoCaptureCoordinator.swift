@@ -16,6 +16,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// VideoCaptureCoordinator handles image capture and preview using camera
 import UIKit
 import AVFoundation
 

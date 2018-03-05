@@ -16,6 +16,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// Main Screen
 import UIKit
 import AVFoundation
 
@@ -23,9 +24,9 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, Vid
 
     @IBOutlet weak var viewCamera: UIView!
     @IBOutlet weak var lblCameraInfo: UILabel!
-    @IBOutlet weak var imgTest: UIImageView!
 
     var vcc: VideoCaptureCoordinator?
+    var sampleTimer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +50,9 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, Vid
 
             // Start video capture
             self.vcc?.turnVideoCapture(on: true)
+
+            // Setup timer
+            self.scheduleCapture()
         }
     }
 
@@ -72,8 +76,26 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, Vid
         self.present(controller, animated: true, completion: nil)
     }
 
+    // Schedule capture in next X seconds
+    func scheduleCapture() {
+        sampleTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { timer in
+            // Have vcc schedule next frame to be captured
+            self.vcc?.captureNextFrame()
+        })
+    }
+
+    // Frame captured as UIImage
     func frameCapture(didCapture image: UIImage) {
-        print("UIImage captured")
-        imgTest.image = image
+        // Send request
+        BPAIBackend.annotateImage(image: image) { (annotations, error) in
+            if let e = error {
+                self.alert(title: "Error", message: e)
+                return
+            }
+
+            for a in annotations! {
+                print(a.class_name)
+            }
+        }
     }
 }

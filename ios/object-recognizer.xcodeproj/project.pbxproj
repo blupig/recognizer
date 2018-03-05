@@ -14,6 +14,7 @@
 		79D25484204A57E300F796FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79D25482204A57E300F796FD /* LaunchScreen.storyboard */; };
 		79D25491204A628200F796FD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D25490204A628200F796FD /* MainViewController.swift */; };
 		79DDF2D9204CAE5E0055ED50 /* VideoCaptureCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DDF2D8204CAE5E0055ED50 /* VideoCaptureCoordinator.swift */; };
+		79DDF2DB204CD1F30055ED50 /* BPAIBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DDF2DA204CD1F30055ED50 /* BPAIBackend.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		79D25485204A57E300F796FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79D25490204A628200F796FD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		79DDF2D8204CAE5E0055ED50 /* VideoCaptureCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCaptureCoordinator.swift; sourceTree = "<group>"; };
+		79DDF2DA204CD1F30055ED50 /* BPAIBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPAIBackend.swift; sourceTree = "<group>"; };
 		AD5EA3A7D43716CEED0E4170 /* Pods_object_recognizer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_object_recognizer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -103,6 +105,7 @@
 				79D25479204A57E300F796FD /* AppDelegate.swift */,
 				79D25490204A628200F796FD /* MainViewController.swift */,
 				79DDF2D8204CAE5E0055ED50 /* VideoCaptureCoordinator.swift */,
+				79DDF2DA204CD1F30055ED50 /* BPAIBackend.swift */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-object-recognizer/Pods-object-recognizer-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
@@ -211,6 +215,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
@@ -242,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79DDF2DB204CD1F30055ED50 /* BPAIBackend.swift in Sources */,
 				79D2547A204A57E300F796FD /* AppDelegate.swift in Sources */,
 				79D25491204A628200F796FD /* MainViewController.swift in Sources */,
 				79DDF2D9204CAE5E0055ED50 /* VideoCaptureCoordinator.swift in Sources */,

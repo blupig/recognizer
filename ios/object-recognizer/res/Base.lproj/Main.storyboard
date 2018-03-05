@@ -84,10 +84,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UYp-xp-Tk4">
-                                <rect key="frame" x="0.0" y="259" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -113,7 +109,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="imgTest" destination="UYp-xp-Tk4" id="P7m-ps-tTg"/>
                         <outlet property="lblCameraInfo" destination="N7O-nw-NYe" id="mp9-6h-ICL"/>
                         <outlet property="viewCamera" destination="ZaE-RB-xtY" id="Eh7-ze-QfS"/>
                     </connections>
