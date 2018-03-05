@@ -27,6 +27,7 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, Vid
     @IBOutlet weak var tableView: UITableView!
 
     var vcc: VideoCaptureCoordinator?
+    var cameraAvailable = false
     var sampleTimer: Timer?
     var annotations: [ImageAnnotation]?
 
@@ -50,21 +51,23 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, Vid
                 return
             }
 
-            // Start video capture
-            self.vcc?.turnVideoCapture(on: true)
-
-            // Setup timer
-            self.scheduleCapture()
+            // No error
+            self.cameraAvailable = true
+            self.automaticCapture(on: true)
         }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // Sync preview layer size
         vcc?.syncPreviewLayerSize(previewView: viewCamera)
+
+        // Start automatic capture
+        automaticCapture(on: true)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        vcc?.turnVideoCapture(on: false)
+        automaticCapture(on: false)
     }
 
     @IBAction func btnPhotoLibraryAct(_ sender: UIBarButtonItem) {
@@ -77,9 +80,23 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, Vid
         self.present(controller, animated: true, completion: nil)
     }
 
+    // Turn capture on / off
+    func automaticCapture(on: Bool) {
+        if cameraAvailable && on  {
+            // Start video capture
+            vcc?.turnVideoCapture(on: true)
+
+            // Setup timer
+            self.scheduleCapture()
+        } else {
+            sampleTimer?.invalidate()
+            vcc?.turnVideoCapture(on: false)
+        }
+    }
+
     // Schedule capture in next X seconds
     func scheduleCapture() {
-        sampleTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { timer in
+        sampleTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { timer in
             // Have vcc schedule next frame to be captured
             self.vcc?.captureNextFrame()
         })
@@ -98,7 +115,7 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, Vid
 
             // Present results
             self.annotations = annotations
-            self.tableView.reloadSections(IndexSet(integer: 0), with: UITableViewRowAnimation.bottom)
+            self.tableView.reloadSections(IndexSet(integer: 0), with: UITableViewRowAnimation.fade)
 
             // Schedule next capture
             self.scheduleCapture()
