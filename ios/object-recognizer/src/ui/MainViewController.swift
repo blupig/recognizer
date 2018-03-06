@@ -20,28 +20,36 @@
 import UIKit
 import AVFoundation
 
-class MainViewController: UIViewController, UIImagePickerControllerDelegate, VideoFrameCaptureDelegate, UITableViewDelegate, UITableViewDataSource {
+class MainViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, VideoFrameCaptureDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var viewCamera: UIView!
     @IBOutlet weak var lblCameraInfo: UILabel!
+    @IBOutlet weak var viewStillImage: UIView!
+    @IBOutlet weak var imgStillImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
 
     var vcc: VideoCaptureCoordinator?
     var cameraAvailable = false
+    var realTimeCaptureEnabled = false
     var sampleTimer: Timer?
     var annotations: [ImageAnnotation]?
+
+    // UIAlertController convenience function
+    func alert(title: String, message: String) {
+        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(controller, animated: true, completion: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Video capture
-        // Hide camera access info
-        self.lblCameraInfo.isHidden = true
-
+        // Create video capture coordinator
         vcc = VideoCaptureCoordinator(self)
 
-        // Request for access
+        // Request for camera access
         vcc?.cameraAuth { (granted) in
+            // Show info label if not granted
             self.lblCameraInfo.isHidden = granted
 
             if !granted { return }
@@ -51,9 +59,10 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, Vid
                 return
             }
 
-            // No error
+            // No error, real-time mode on by default
             self.cameraAvailable = true
-            self.automaticCapture(on: true)
+            self.realTimeCaptureEnabled = true
+            self.realTimeCapture(on: true)
         }
     }
 
@@ -63,26 +72,47 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, Vid
         vcc?.syncPreviewLayerSize(previewView: viewCamera)
 
         // Start automatic capture
-        automaticCapture(on: true)
+        realTimeCapture(on: true)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        automaticCapture(on: false)
+        // Pause real-time capture
+        realTimeCapture(on: false)
     }
 
+    // Pick image from photo library
     @IBAction func btnPhotoLibraryAct(_ sender: UIBarButtonItem) {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            let pc = UIImagePickerController()
+            // Customize
+            pc.navigationBar.isTranslucent = false
+            pc.navigationBar.barTintColor = UIColor.darkGray
+            pc.navigationBar.tintColor = UIColor.white
+            pc.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
+            // Receive results
+            pc.delegate = self
+            pc.sourceType = .photoLibrary
+            self.present(pc, animated: true, completion: nil)
+        }
     }
 
-    // UIAlertController convenience function
-    func alert(title: String, message: String) {
-        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(controller, animated: true, completion: nil)
+    // Resume real-time mode
+    @IBAction func btnResumeRealTimeAction(_ sender: UIButton) {
+        // Hide controls
+        viewStillImage.isHidden = true
+
+        // Clear results
+        annotations = nil
+        tableView.reloadData()
+
+        // Resume real-time capture
+        realTimeCaptureEnabled = true
+        realTimeCapture(on: true)
     }
 
     // Turn capture on / off
-    func automaticCapture(on: Bool) {
-        if cameraAvailable && on  {
+    func realTimeCapture(on: Bool) {
+        if cameraAvailable && realTimeCaptureEnabled && on  {
             // Start video capture
             vcc?.turnVideoCapture(on: true)
 
@@ -118,13 +148,15 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, Vid
             self.tableView.reloadSections(IndexSet(integer: 0), with: UITableViewRowAnimation.fade)
 
             // Schedule next capture
-            self.scheduleCapture()
+            if self.realTimeCaptureEnabled {
+                self.scheduleCapture()
+            }
         }
     }
 
     // MARK: UITableView Delegates
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 55
+        return 60
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -149,5 +181,29 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, Vid
             cell.pbProbability.progress = 0
         }
         return cell
+    }
+
+    // MARK: UIImagePickerControllerDelegate
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+
+        // Picked still image
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            // Stop real-time capture
+            realTimeCaptureEnabled = false
+            realTimeCapture(on: false)
+
+            // Show still image controls
+            viewStillImage.isHidden = false
+
+            // Scale and crop image to 1:1
+            let image = image.af_imageAspectScaled(toFill: CGSize(width: 1024, height: 1024))
+
+            // Display image
+            imgStillImage.image = image
+
+            // Pass frame for annotation
+            frameCapture(didCapture: image)
+        }
     }
 }

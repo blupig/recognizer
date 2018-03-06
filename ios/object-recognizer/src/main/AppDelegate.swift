@@ -28,13 +28,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         // Customize bar button font
-        if let barButtonFont = UIFont(name: "Apple SD Gothic Neo", size: 17.0) {
+        if let barButtonFont = UIFont(name: "Apple SD Gothic Neo", size: 16.0) {
             UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: barButtonFont], for: .normal)
             UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: barButtonFont], for: .highlighted)
         } else {
             // If the font is not available
-            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)], for: .normal)
-            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)], for: .highlighted)
+            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)], for: .normal)
+            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)], for: .highlighted)
         }
         return true
     }
