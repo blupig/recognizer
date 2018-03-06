@@ -39,10 +39,17 @@ app = flask.Flask(__name__)
 def health():
     return 'ok'
 
+
 # API info
 @app.route('/info')
 def info():
-    return flask.jsonify({'loaded_model': os.path.basename(trained_model_path)})
+    results = {
+        'loaded_model': os.path.basename(trained_model_path),
+        'error': None
+    }
+
+    return flask.jsonify(results)
+
 
 # Annotate route
 @app.route('/annotate', methods=['POST'])
