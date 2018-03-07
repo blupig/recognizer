@@ -126,7 +126,7 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 
     // Schedule capture in next X seconds
     func scheduleCapture() {
-        sampleTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { timer in
+        sampleTimer = Timer.scheduledTimer(withTimeInterval: 1.2, repeats: false, block: { timer in
             // Have vcc schedule next frame to be captured
             self.vcc?.captureNextFrame()
         })
